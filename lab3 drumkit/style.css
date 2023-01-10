@@ -1,0 +1,19 @@
+body {
+    background-color: rgb(255, 255, 255);
+}
+p {
+    color: rgb(0, 0, 0);
+    font-size: 60px;
+}
+.buttons-con {
+    width: fit-content;
+    margin: auto;
+}
+#btn-start-recording {
+    color: rgb(3, 1, 1);
+    font-size: 40px;
+    border: 1px solid rgb(15, 2, 2);
+    width: fit-content;
+    padding: 0 100px;
+    margin: auto;
+} 
