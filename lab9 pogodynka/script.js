@@ -1,39 +1,61 @@
 const apiKey = "c4885943eadf9be6247d524937f10a59";
-const main = document.getElementById('script');
-const form = document.getElementById('form');
-const search = document.getElementById('search');
-const url = (city)=> `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-async function getWeatherByLocation(city) {
-    const resp = await fetch(url(city), {
-        origin: "cros"
-    });
-    const respData = await resp.json();
-    addWeatherToPage(respData);
+
+function submitForm() {
+  const location = document.getElementById("search").value;
+  let locationObject = JSON.parse(localStorage.getItem("location")) || {};
+  for (let i = 9; i > 0; i--) {
+    locationObject[i] = locationObject[i - 1];
+  }
+  locationObject[0] = location;
+  localStorage.setItem("location", JSON.stringify(locationObject));
+  fetchWeatherData(location);
 }
 
-function addWeatherToPage(data){
-    const temp = Ktoc(data.main.temp);
-    const weather = document.createElement('div')
-    weather.classList.add('weather');
-    weather.innerHTML = `
-    <h2><img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /> ${temp}°C <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" /></h2>
-    <small>${data.weather[0].main}</small>
-    `;
-    main.innerHTML= "";
-    main.appendChild(weather);
-};
-
-function Ktoc(K){
-    return Math.floor(K - 273.15);
-}
-form.addEventListener('submit',(e) =>{
-    e.preventDefault();
-    const city = search.value;
-    if(city){
-        getWeatherByLocation(city)
-    }
+document.getElementById("form").addEventListener("submit", function (event) {
+  event.preventDefault();
+  submitForm();
 });
-let clear = document.querySelector("i.fa-times");
-clear.addEventListener("click", () => {
-    document.getElementById("search").value = null;
-})
+
+function fetchWeatherData(location) {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let temperature = data.main.temp;
+      temperature = temperature - 273.15;
+      temperature = temperature.toFixed(1);
+      const humidity = data.main.humidity;
+      const weather = data.weather[0].main;
+      console.log(weather);
+      const icon = data.weather[0].icon;
+      console.log(data);
+      const tableBody = document.getElementById("data");
+      const newRow = document.createElement("tr");
+      newRow.innerHTML = `
+            <td>${location}</td>
+            <td>${temperature} &#8451;</td>
+            <td>${humidity}</td>
+            <td><img src="http://openweathermap.org/img/wn/${icon}@2x.png"></td>
+        `;
+      tableBody.appendChild(newRow);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function loadDataOnStartup() {
+  const locationObject = JSON.parse(localStorage.getItem("location"));
+  if (locationObject) {
+    for (let i = 0; i < 10; i++) {
+      if (locationObject[i]) {
+        fetchWeatherData(locationObject[i]);
+      }
+    }
+  }
+}
+
+window.onload = function () {
+  loadDataOnStartup();
+};

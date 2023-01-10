@@ -1,62 +1,57 @@
+/* Slider */
 #slider {
-  width: 800px;
-  height: 400px;
   position: relative;
   overflow: hidden;
+  margin: 20px auto;
+  width: 80%;
 }
 
+/* Slides */
 .slides {
-  width: 2400px;
-  height: 100%;
   display: flex;
   transition: transform 0.4s;
 }
 
-.slides img {
-  width: 800px;
-  height: 100%;
-}
-
-#prev-btn, #next-btn {
-  width: 50px;
-  height: 50px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  font-size: 30px;
-  line-height: 50px;
-  text-align: center;
+/* Navigation buttons */
+#prev-btn,
+#next-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  font-size: 2em;
   cursor: pointer;
   user-select: none;
 }
 
 #prev-btn {
-  left: 0;
+  left: 5%;
 }
 
 #next-btn {
-  right: 0;
+  right: 5%;
 }
 
+/* Navigation buttons */
 #slider-nav {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
   width: 100%;
-  text-align: center;
-  margin-top: 10px;
 }
 
 .nav-btn {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  background-color: gray;
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
   border-radius: 50%;
+  background-color: #ccc;
+  line-height: 30px;
+  text-align: center;
   cursor: pointer;
   user-select: none;
-  margin: 0 5px;
 }
 
 .nav-btn.active {
-  background-color: black;
+  background-color: #333;
 }

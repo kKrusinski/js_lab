@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap");
+
 * {
     box-sizing: border-box;
 }
+
 body {
     margin: 0;
     font-family: "Poppins", sans-serif;
@@ -12,6 +14,7 @@ body {
     min-height: 100vh;
     flex-direction: column;
 }
+
 div.container {
     min-height: 400px;
     min-width: 400px;
@@ -21,6 +24,7 @@ div.container {
     padding: 30px 40px;
     color: #545B5A;
 }
+
 form {
     padding: 1rem 1.5rem;
     border-radius: 25px;
@@ -33,23 +37,28 @@ form {
     justify-content: space-between;
     align-items: center;
 }
+
 input {
     border: none;
     min-width: 300px;
     font-size: 1rem;
 }
+
 input:focus {
     outline: none;
 }
+
 i.fas {
     font-size: 18px;
 }
+
 .weather {
     text-align: center;
     font-size: 2rem;
     display: grid;
     place-items: center;
 }
+
 .weather h2 {
     margin-bottom: 0;
     display: flex;
@@ -62,39 +71,49 @@ i.fas {
         padding: 20px 30px;
     }
 }
+
 @media screen and (max-width: 480px) {
     div.container {
         min-width: 200px;
         padding: 20px 20px;
     }
+
     form {
         width: 100%;
     }
+
     input {
         min-width: 150px;
     }
+
     .weather {
         font-size: 1.5rem;
     }
+
     i.fas {
         font-size: 16px;
     }
 }
+
 @media screen and (max-width: 360px) {
     div.container {
         max-width: 280px;
         padding: 20px 15px;
     }
+
     form {
         width: 100%;
         padding: .5rem 1rem;
     }
+
     input {
         min-width: 100px;
     }
+
     .weather {
         font-size: 1rem;
     }
+
     i.fas {
         font-size: 12px;
     }

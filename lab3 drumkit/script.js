@@ -56,10 +56,38 @@ function playSound(key) {
             console.log(key);
     }
 }
-function startRecording(key) {
-    if (key == ' ') {
-        // space 
-        btnStartRecording.style.boxShadow = "0 0 10px 1px white";
 
-    }
+
+let mediaRecorder;
+let audioContext;
+let audioElement;
+let sourceNode;
+let streamDestination;
+let recordedBlobs = [];
+
+audioElement = document.getElementById("audioElement");
+
+audioElement.onloadedmetadata = function(e) {
+  audioContext = new AudioContext();
+  sourceNode = audioContext.createMediaElementSource(audioElement);
+  streamDestination = audioContext.createMediaStreamDestination();
+  sourceNode.connect(streamDestination);
+  mediaRecorder = new MediaRecorder(streamDestination.stream);
+  mediaRecorder.ondataavailable = handleDataAvailable;
 }
+
+function startRecording() {
+  recordedBlobs = [];
+  mediaRecorder.start();
+}
+
+function stopRecording() {
+  mediaRecorder.stop();
+}
+
+function handleDataAvailable(event) {
+  if (event.data.size > 0) {
+    recordedBlobs.push(event.data);
+  }
+}
+
