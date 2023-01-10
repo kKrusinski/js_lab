@@ -1,74 +1,60 @@
-// Funkcja tworzenia notatki
-function createNote(title, content, color, pin) {
+let notes = [];
+let currentEditingNote = null;
+
+function createNote(title, content, color) {
     const note = {
-      title: title,
-      content: content,
-      color: color,
-      pin: pin,
-      createdAt: new Date()
+        title: title,
+        content: content,
+        color: color,
+        pin: false,
+        createdAt: new Date()
     };
     localStorage.setItem(note.createdAt.toString(), JSON.stringify(note));
     return note;
-  }
-  
-  // Funkcja renderowania notatek na stronie
-  function renderNotes() {
-    const notes = getNotes();
-    const noteList = document.getElementById("note-list");
-    noteList.innerHTML = "";
-    for (const note of notes) {
-      const noteElem = document.createElement("div");
-      noteElem.style.backgroundColor = note.color;
-      noteElem.innerHTML = `<h2>${note.title}</h2><p>${note.content}</p>`;
-      if (note.pin) {
-        noteElem.style.order = "-1";
-      }
-      noteElem.addEventListener("click", function() {
-        editNote(note);
-      });
-      noteList.appendChild(noteElem);
-    }
-  }
-  
-  // Funkcja pobierająca notatki z localStorage
-  function getNotes() {
-    const notes = [];
+}
+
+function getNotes() {
+    notes = [];
     for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      const note = JSON.parse(localStorage.getItem(key));
-      notes.push(note);
+        const key = localStorage.key(i);
+        if (key !== "loglevel:webpack-dev-server") {
+            const note = JSON.parse(localStorage.getItem(key));
+            notes.push(note);
+        }
     }
-    return notes;
-  }
-  
-  // Funkcja edycji notatki
-  function editNote(note) {
-    const title = prompt("Enter new title:", note.title);
-    const content = prompt("Enter new content:", note.content);
-    const color = prompt("Enter new color:", note.color);
-    note.title = title;
-    note.content = content;
-    note.color = color;
-    localStorage.setItem(note.createdAt.toString(), JSON.stringify(note));
-    renderNotes();
-  }
-  
-  // Funkcja usuwająca wszystkie notatki z localStorage
-  function clearNotes() {
-    localStorage.clear();
-    renderNotes();
-  }
-  
-  const createButton = document.getElementById("create-button");
-createButton.addEventListener("click", function() {
-  const title = document.getElementById("note-title").value;
-  const content = document.getElementById("note-content").value;
-  const color = document.getElementById("note-color").value;
-  createNote(title, content, color, false);
-  renderNotes();
-});
+    return notes.sort((a, b) => b.pin - a.pin)
+}
 
-const clearButton = document.getElementById("clear-button");
-clearButton.addEventListener("click", clearNotes);
-
-renderNotes();
+function renderNotes() {
+  notes = getNotes();
+  const noteList = document.getElementById("note-list");
+  noteList.innerHTML = "";
+  for (const note of notes) {
+      const noteElem = document.createElement("div");
+      noteElem.classList.add("note");
+      noteElem.style.backgroundColor = note.color;
+      if (!currentEditingNote && note.pin) {
+          noteElem.style.border = "solid 2px #000";
+          noteElem.style.zIndex = 1;
+      }
+      noteElem.innerHTML = `<h2>${note.title}</h2><p>${note.content}</p>`;
+      const editButton = document.createElement("button");
+      editButton.innerHTML = "Edit";
+      editButton.addEventListener("click", function() {
+          currentEditingNote = note;
+          document.getElementById("edit-note-title").value = note.title;
+          document.getElementById("edit-note-content").value = note.content;
+          document.getElementById("edit-note-container").style.display = "block";
+      });
+      noteElem.appendChild(editButton);
+      const pinButton = document.createElement("button");
+      pinButton.innerHTML = "Pin/Unpin";
+      pinButton.addEventListener("click", function() {
+          note.pin = !note.pin;
+          localStorage.setItem(note.createdAt.toString(), JSON.stringify(note));
+          renderNotes();
+      });
+      noteElem.appendChild(pinButton);
+      noteList.appendChild(noteElem);
+  }
+}

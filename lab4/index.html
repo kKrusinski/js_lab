@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NotePocket</title>
+    <title>Note App</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <body>
-    
-    <div id="note-list">
-      </div>
-      <div>
+    <div id="note-list"></div>
+    <div>
         <input type="text" id="note-title" placeholder="Note Title">
         <textarea id="note-content" placeholder="Note Content"></textarea>
         <input type="color" id="note-color">
         <button id="create-button">Create Note</button>
         <button id="clear-button">Clear All Notes</button>
-      </div>
-      <script src="script.js"></script>
+    </div>
+    <div id="edit-note-container">
+        <h3>Edit Note</h3>
+        <input type="text" id="edit-note-title" placeholder="Note Title">
+        <textarea id="edit-note-content" placeholder="Note Content"></textarea>
+        <button id="update-button">Update Note</button>
+        <button id="cancel-button">Cancel</button>
+    </div>
+    
+    <script src="script.js"></script>
 </body>
+
 </html>
