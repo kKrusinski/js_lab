@@ -5,16 +5,8 @@ const nextBtn = document.getElementById('next-btn');
 const navBtns = document.querySelectorAll('.nav-btn');
 
 let currentSlide = 1;
-
-if (slides.firstElementChild) {
- 
-  let slideWidth = slides.firstElementChild.offsetWidth;
-
-} else {
-
-  console.error('Brak elementów potomnych w elemencie .slides');
-}
-let slidesCount = slides.querySelectorAll('img').length;
+let slideWidth = slides.firstElementChild.offsetWidth;
+let slidesCount = slides.childElementCount;
 
 slides.style.transform = `translateX(-${slideWidth}px)`;
 
