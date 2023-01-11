@@ -3,10 +3,12 @@
   position: relative;
   overflow: hidden;
   margin: 20px auto;
-  width: 80%;
+  width: 700px;
 }
-
-/* Slides */
+.slides img {
+width: 700px;
+height: auto;
+}
 .slides {
   display: flex;
   transition: transform 0.4s;
