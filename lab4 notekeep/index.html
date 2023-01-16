@@ -1,29 +1,54 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Note App</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" href="style.css">
+<script src="https://kit.fontawesome.com/90b894ab76.js" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>noteApp</title>
 </head>
-
 <body>
-    <div id="note-list"></div>
-    <div>
-        <input type="text" id="note-title" placeholder="Note Title">
-        <textarea id="note-content" placeholder="Note Content"></textarea>
-        <input type="color" id="note-color">
-        <button id="create-button">Create Note</button>
-        <button id="clear-button">Clear All Notes</button>
-    </div>
-    <div id="edit-note-container">
-        <h3>Edit Note</h3>
-        <input type="text" id="edit-note-title" placeholder="Note Title">
-        <textarea id="edit-note-content" placeholder="Note Content"></textarea>
-        <button id="update-button">Update Note</button>
-        <button id="cancel-button">Cancel</button>
+    
+    <div class="note">
+        <div class="header">
+            <h1>noteApp</h1>
+            <input type="text" class="note-input" placeholder="Wpisz treść notatki...">
+            <button class="btn-add">Add</button>
+        </div>
+        <div class="notelist">
+            <h3>Lista notatek:</h3>
+
+            <ul>
+       
+                    </div>
+                </li>
+
+                    </div>
+                </li>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
     
-    <script src="script.js"></script>
+    <div class="popup">
+        <h3>Edytuj Notatkę:</h3>
+        <div class="popup-body">
+            <p class="popup-info"></p>
+            <input type="text" class="popup-input" placeholder="Wprowadź nową treść notatki...">
+            <button class="popup-btn accept">Zatwierdź</button>
+            <button class="popup-btn cancel">Anuluj</button>
+        </div>
+    </div>
+<script src="script.js"></script>
 </body>
-
 </html>
+
+
+
+
