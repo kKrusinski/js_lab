@@ -2,32 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">  
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"> 
     <title>Slider</title>
 </head>
 <body>
-  
-    <div id="slider">
+    <!-- -->
+    <div class="sld">
+        <button id="prevBtn"></button>
+    </div>
+    <div class="slider">
         <div class="slides">
-            <img src="image2.jpg" alt="Slide 1">
-            <img src="image2.jpg" alt="Slide 2">
-            <img src="image2.jpg" alt="Slide 3">
-            <img src="image2.jpg" alt="Slide 4">
-            <img src="image2.jpg" alt="Slide 5">
+            <!-- -->
+            <input type="radio" name="radio-btn" id="radio1" checked />
+            <input type="radio" name="radio-btn" id="radio2" />
+            <input type="radio" name="radio-btn" id="radio3" />
+            <input type="radio" name="radio-btn" id="radio4" />
+            <!-- -->
+            <div class="slide first">
+                <img src="image1.jpg" />
+            </div>
+            <div class="slide">
+                <img src="image2.jpg" />
+            </div>
+            <div class="slide">
+                <img src="image3.jpg" />
+            </div>
+            <div class="slide">
+                <img src="image4.jpg" />
+            </div>
+            <!-- -->
+            <div class="navigation-auto">
+                <div class="auto-btn1"></div>
+                <div class="auto-btn2"></div>
+                <div class="auto-btn3"></div>
+                <div class="auto-btn4"></div>
+            </div>
+            <!-- -->
         </div>
-        <div id="prev-btn">&laquo;</div>
-        <div id="next-btn">&raquo;</div>
-        <div id="slider-nav">
-          <div class="nav-btn" data-slide="1"></div>
-          <div class="nav-btn" data-slide="2"></div>
-          <div class="nav-btn" data-slide="3"></div>
-          <div class="nav-btn" data-slide="4"></div>
-          <div class="nav-btn" data-slide="5"></div>
-         
+        <!-- -->
+        <div class="navigation-manual">
+            <label for="radio1" class="manual-btn"></label>
+            <label for="radio2" class="manual-btn"></label>
+            <label for="radio3" class="manual-btn"></label>
+            <label for="radio4" class="manual-btn"></label>
         </div>
     </div>
-    <script src="index.js"></script>
+    <div class="sld">
+        <button id="nextBtn">></button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

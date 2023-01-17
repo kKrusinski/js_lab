@@ -24,7 +24,7 @@ const prepareDOMElements = () => {
     errorInfo = document.querySelector('.error-info')
     addBtn = document.querySelector('.btn-add')
     ulList = document.querySelector('.notelist ul')
-
+    
     popup = document.querySelector('.popup')
     popupInfo = document.querySelector('.popup-info')
     popupInput = document.querySelector('.popup-input')
@@ -66,7 +66,7 @@ const createToolsArea = () => {
 
     const completeBtn = document.createElement('button')
     completeBtn.classList.add('complete')
-    completeBtn.innerHTML = '<i class="fas fa-check"></i>'
+    completeBtn.innerHTML = '<i class="fas fa-thumbtack"></i>'
 
     const editBtn = document.createElement('button')
     editBtn.classList.add('edit')
@@ -93,9 +93,7 @@ const checkClick = e => {
 const editNote = e => {
    noteToEdit = e.target.closest('li')
 
-   popupInput.value = noteToEdit.firstChild.textContent
-
-   console.log(noteToEdit.firstChild);
+    popupInput.value = noteToEdit.firstChild.textContent
     popup.style.display = 'flex'
 }
 
