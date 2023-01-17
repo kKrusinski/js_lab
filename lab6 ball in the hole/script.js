@@ -5,6 +5,7 @@ let startTime;
 let records = [];
 
 
+window.addEventListener('load', startTimer);
 request.addEventListener('click', requestOrientationPermission)
 document.addEventListener('touchstart', startTimer);
 document.addEventListener('touchend', stopTimer);
@@ -15,6 +16,8 @@ function onDeviceMove(event) {
   
   if (collision(ball, hole)) {
     records.push(Date.now() - startTime);
+    stopTimer();
+    console.log(`It took ${records[records.length - 1]}ms to hit the hole`);
     console.log("Ball in Hole!");
   }
 }
@@ -59,6 +62,11 @@ function requestOrientationPermission() {
       window.addEventListener('deviceorientation', onDeviceMove);
     }
   }
+
+
+const detectScore = (e) => {
+    
+}
 
 
 requestOrientationPermission()
