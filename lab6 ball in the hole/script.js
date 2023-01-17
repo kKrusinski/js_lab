@@ -1,16 +1,17 @@
 const ball = document.querySelector('.ball');
 const hole = document.querySelector('.hole');
+const request = document.querySelector('.request')
 let startTime;
 let records = [];
 
-window.addEventListener('deviceorientation', onDeviceMove);
 
+request.addEventListener('click', requestOrientationPermission)
 document.addEventListener('touchstart', startTimer);
 document.addEventListener('touchend', stopTimer);
 
 function onDeviceMove(event) {
-  ball.style.left = event.gamma + 'px';
-  ball.style.top = event.beta + 'px';
+  ball.style.left = event.gamma * 10 + 'px';
+  ball.style.top = event.beta * 10 + 'px';
   
   if (collision(ball, hole)) {
     records.push(Date.now() - startTime);
@@ -42,3 +43,22 @@ function collision(element1, element2) {
 function displayRecords() {
   console.log("Records: ", records);
 }
+
+
+function requestOrientationPermission() {
+    if (typeof DeviceOrientationEvent.requestPermission === "function") {
+      DeviceOrientationEvent.requestPermission()
+        .then((permissionState) => {
+          if (permissionState === "granted") {
+            window.addEventListener('deviceorientation', onDeviceMove);
+          }
+        })
+        .catch(console.error);
+      return;
+    } else {
+      window.addEventListener('deviceorientation', onDeviceMove);
+    }
+  }
+
+
+requestOrientationPermission()
