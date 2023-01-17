@@ -1,0 +1,23 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .ball {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 25px;
+  }
+  
+  .hole {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    border-radius: 25px;
+    left: calc(50% - 25px);
+    top: calc(50% - 25px);
+  }
