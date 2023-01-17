@@ -4,6 +4,9 @@ const request = document.querySelector('.request')
 let startTime;
 let records = [];
 
+const maxWidth = window.innerWidth
+const maxHeight = window.innerHeight
+
 
 window.addEventListener('load', startTimer);
 request.addEventListener('click', requestOrientationPermission)
@@ -17,9 +20,20 @@ function onDeviceMove(event) {
   if (collision(ball, hole)) {
     records.push(Date.now() - startTime);
     stopTimer();
-    console.log(`It took ${records[records.length - 1]}ms to hit the hole`);
-    console.log("Ball in Hole!");
-  }
+    alert(`It took ${records[records.length - 1] / 1000}s to hit the hole`);
+    startTime = Date.now()
+    records = []
+    ball.style.left = '0px';
+    ball.style.top = '0px';
+    randomPosition()
+  } 
+}
+
+const randomPosition = () => {
+    const x =  Math.floor(Math.random() * (maxWidth - 0 + 1) + 0)
+    const y =   Math.floor(Math.random() * (maxHeight - 0 + 1) + 0)
+    hole.style.left = x + 'px'
+    hole.style.top = y + 'px'
 }
 
 function startTimer() {
@@ -64,9 +78,5 @@ function requestOrientationPermission() {
   }
 
 
-const detectScore = (e) => {
-    
-}
-
-
+randomPosition()
 requestOrientationPermission()
