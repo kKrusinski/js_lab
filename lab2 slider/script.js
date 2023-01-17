@@ -1,37 +1,22 @@
-let counter = 2;
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const radioBtns = document.querySelectorAll("input[name='radio-btn']");
+let currentSlide = 0;
 
-setInterval(function(){
-    document.getElementById('radio' + counter).checked = true;
-    counter++;
-    if (counter > 4) {
-        counter = 1;
-    }
-}, 5000);
-
-
-document.getElementById("prevBtn").addEventListener("click", function(){
-    if (counter === 1) {
-        counter = 4;
-    } else {
-        counter--;
-    }
-    document.getElementById('radio' + counter).checked = true;
+prevBtn.addEventListener("click", function () {
+  radioBtns[currentSlide].checked = false;
+  currentSlide = (currentSlide - 1 + radioBtns.length) % radioBtns.length;
+  radioBtns[currentSlide].checked = true;
 });
 
-document.getElementById("nextBtn").addEventListener("click", function(){
-    if (counter === 4) {
-        counter = 1;
-    } else {
-        counter++;
-    }
-    document.getElementById('radio' + counter).checked = true;
+nextBtn.addEventListener("click", function () {
+  radioBtns[currentSlide].checked = false;
+  currentSlide = (currentSlide + 1) % radioBtns.length;
+  radioBtns[currentSlide].checked = true;
 });
 
-setInterval(function(){
-    if (counter === 4) {
-        counter = 1;
-    } else {
-        counter++;
-    }
-    document.getElementById('radio' + counter).checked = true;
-}, 5000);
+setInterval(function () {
+    radioBtns[currentSlide].checked = false;
+    currentSlide = (currentSlide + 1) % radioBtns.length;
+    radioBtns[currentSlide].checked = true;
+  }, 3000);
