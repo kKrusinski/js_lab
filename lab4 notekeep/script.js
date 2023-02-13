@@ -1,120 +1,123 @@
-let noteInput
-let errorInfo
-let addBtn
-let ulList
-let newNote
+let addBtn = document.getElementById("add-btn");
+addBtn.addEventListener("click", function(e) {
 
-
-let popup
-let popupInfo
-let noteToEdit
-let popupInput
-let popupAddBtn
-let popupClosebtn
-
-
-
-const main = () => {
-    prepareDOMElements()
-    prepareDOMEvents()
-}
-
-const prepareDOMElements = () => {
-    noteInput = document.querySelector('.note-input')
-    errorInfo = document.querySelector('.error-info')
-    addBtn = document.querySelector('.btn-add')
-    ulList = document.querySelector('.notelist ul')
-    
-    popup = document.querySelector('.popup')
-    popupInfo = document.querySelector('.popup-info')
-    popupInput = document.querySelector('.popup-input')
-    popupAddBtn = document.querySelector('.accept')
-    popupClosebtn = document.querySelector('.cancel')
-}
-
-const prepareDOMEvents = () => {
-    addBtn.addEventListener('click', addNewNote)
-    ulList.addEventListener('click', checkClick)
-    popupClosebtn.addEventListener('click', closePopup)
-    popupAddBtn.addEventListener('click', changeNoteText)
-    
-
-
-}
-
-const addNewNote = () => {
-    if (noteInput.value !== '') {
-        newNote = document.createElement('li');
-        newNote.textContent = noteInput.value
-        createToolsArea()
-        ulList.append(newNote)
-       
-       
-       
-       
-        noteInput.value = ''
-        errorInfo.textContent =''
-    } else {
-        errorInfo.textContent = 'Wpisz treść zadania!'
+  let addTitle = document.getElementById("note-title");
+  let addTxt = document.getElementById("note-text");
+  
+    if (addTitle.value == "" || addTxt.value == "") {
+        return alert("Please add Note Title and Details")
     }
-}
 
-const createToolsArea = () => {
-    const toolsPanel = document.createElement('div')
-    toolsPanel.classList.add('tools')
-    newNote.append(toolsPanel)
+  let notes = localStorage.getItem("notes");
+  if (notes == null) {
+    notesObj = [];
+  } else {
+    notesObj = JSON.parse(notes);
+  }
+  let myObj = {
+    title: addTitle.value,
+    text: addTxt.value,
+	time: new Date().toLocaleString(),
+	pinned: false
+  }
+  notesObj.push(myObj);
+  localStorage.setItem("notes", JSON.stringify(notesObj));
+  addTxt.value = "";
+  addTitle.value = "";
 
-    const completeBtn = document.createElement('button')
-    completeBtn.classList.add('complete')
-    completeBtn.innerHTML = '<i class="fas fa-thumbtack"></i>'
+  showNotes();
+});
 
-    const editBtn = document.createElement('button')
-    editBtn.classList.add('edit')
-    editBtn.textContent = 'EDIT'
-
-    const deleteBtn = document.createElement('button')
-    deleteBtn.classList.add('delete')
-    deleteBtn.innerHTML = '<i class="fas fa-times"></i>'
-
-    toolsPanel.append(completeBtn,editBtn,deleteBtn)
-}
-
-const checkClick = e => {
-   if(e.target.matches('.complete')){
-  e.target.closest('li').classList.toggle('completed')
-  e.target.classList.toggle('completed')
-   }else if(e.target.matches('.edit')) {
-    editNote(e)
-   }else if (e.target.matches('.delete')){
-    deleteNote(e)
-   }
-   }
-
-const editNote = e => {
-   noteToEdit = e.target.closest('li')
-
-    popupInput.value = noteToEdit.firstChild.textContent
-    popup.style.display = 'flex'
-}
-
-const closePopup = () => {
-    popup.style.display = 'none'
-    popupInfo.textContent = ''
-}
+// Function to show elements from localStorage
+function showNotes() {
+	let notes = localStorage.getItem("notes");
+	if (notes == null) {
+	  notesObj = [];
+	} else {
+	  notesObj = JSON.parse(notes);
+	}
+	let html = "";
+	notesObj.forEach(function(element, index) {
+	  html += `
+		  <div class="note">
+			  <p class="note-counter">Note ${index + 1}</p>
+			  <h3 class="note-title"> ${element.title} </h3>
+			  <p class="note-text"> ${element.text}</p>
+			  <p class="note-time">Added on: ${element.time}</p>
+			  <button id="${index}"onclick="deleteNote(this.id)" class="note-btn">Delete Note</button>
+			  <button id="${index}"onclick="editNote(this.id)" class="note-btn edit-btn">Edit Note</button>
+			  <button id="${index}"onclick="pinNote(this.id)" class="note-btn pin-btn">Pin Note</button>
+		  </div>
+			  `;
+	});
+	let notesElm = document.getElementById("notes");
+	if (notesObj.length != 0) {
+	  notesElm.innerHTML = html;
+	} else {
+	  notesElm.innerHTML = `No Notes Yet! Add a note using the form above.`;
+	}
+  }
 
 
-const changeNoteText = () => {
-    if(popupInput.value !== ''){
-        noteToEdit.firstChild.textContent = popupInput.value
-        popup.style.display = 'none'
-        popupInfo.textContent = ''
-    } else {
-        popupInfo.textContent = 'Musisz podać jakąś treść!'
+function deleteNote(index) {
+//   console.log("I am deleting", index);
+    let confirmDel = confirm("Delete this note?");
+    if (confirmDel == true) {
+        let notes = localStorage.getItem("notes");
+        if (notes == null) {
+            notesObj = [];
+        } else {
+            notesObj = JSON.parse(notes);
+        }
+
+        notesObj.splice(index, 1);
+        localStorage.setItem("notes", JSON.stringify(notesObj));
+        showNotes();
     }
+  
+}
+
+// Function to Edit the Note
+function editNote(index) {
+    let notes = localStorage.getItem("notes");
+    let addTitle = document.getElementById("note-title");
+    let addTxt = document.getElementById("note-text");
+
+    if (addTitle.value !== "" || addTxt.value !== "") {
+      return alert("Please clear the form before editing a note")
+    } 
+
+    if (notes == null) {
+      notesObj = [];
+    } else {
+      notesObj = JSON.parse(notes);
+    }
+    console.log(notesObj);
+
+    notesObj.findIndex((element, index) => {
+      addTitle.value = element.title;
+      addTxt.value = element.text;
+    })
+    notesObj.splice(index, 1);
+        localStorage.setItem("notes", JSON.stringify(notesObj));
+        showNotes();
 }
 
 
-const deleteNote = (e) => {
-    e.target.closest('li').remove()
-}
-document.addEventListener('DOMContentLoaded', main)
+function pinNote(index) {
+	let notes = localStorage.getItem("notes");
+	if (notes == null) {
+	  notesObj = [];
+	} else {
+	  notesObj = JSON.parse(notes);
+	}
+  
+	notesObj[index].pinned = !notesObj[index].pinned;
+  
+	notesObj.sort((a, b) => a.pinned - b.pinned);
+  
+	localStorage.setItem("notes", JSON.stringify(notesObj));
+	showNotes();
+  }
+
+showNotes();
