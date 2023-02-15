@@ -36,13 +36,14 @@ function showNotes() {
 	} else {
 	  notesObj = JSON.parse(notes);
 	}
+  notesObj.sort((a, b) => b.pinned - a.pinned);
 	let html = "";
 	notesObj.forEach(function(element, index) {
 	  html += `
 		  <div class="note">
-			  <p class="note-counter">Note ${index + 1}</p>
 			  <h3 class="note-title"> ${element.title} </h3>
 			  <p class="note-text"> ${element.text}</p>
+        <p class="pin"> ${element.pinned}</p>
 			  <p class="note-time">Added on: ${element.time}</p>
 			  <button id="${index}"onclick="deleteNote(this.id)" class="note-btn">Delete Note</button>
 			  <button id="${index}"onclick="editNote(this.id)" class="note-btn edit-btn">Edit Note</button>
@@ -82,6 +83,7 @@ function editNote(index) {
     let notes = localStorage.getItem("notes");
     let addTitle = document.getElementById("note-title");
     let addTxt = document.getElementById("note-text");
+    const editFixed = document.getElementById("add-btn");
 
     if (addTitle.value !== "" || addTxt.value !== "") {
       return alert("Please clear the form before editing a note")
@@ -101,6 +103,8 @@ function editNote(index) {
     notesObj.splice(index, 1);
         localStorage.setItem("notes", JSON.stringify(notesObj));
         showNotes();
+
+        editFixed.innerHTML = "Save"
 }
 
 
@@ -113,9 +117,7 @@ function pinNote(index) {
 	}
   
 	notesObj[index].pinned = !notesObj[index].pinned;
-  
-	notesObj.sort((a, b) => a.pinned - b.pinned);
-  
+  notesObj.sort((a, b) => b.pinned - a.pinned);
 	localStorage.setItem("notes", JSON.stringify(notesObj));
 	showNotes();
   }
